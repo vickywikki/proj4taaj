@@ -1,0 +1,453 @@
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}
+    Food Items
+{% endblock %}
+
+{% block styles %}
+{{super()}}
+<link rel="stylesheet" href="{{url_for('.static', filename='signup.css')}}">
+
+    <!-- Font link  -->
+<link href="https://fonts.googleapis.com/css?family=Allerta+Stencil" rel="stylesheet">
+
+    <!-- Styling code -->
+    <style>
+    {#  Using FontAwesome for heart icons #}
+    body
+    {
+        background-color: mistyrose;
+    }
+    .menu_item
+    {
+        border-right: groove;
+        border-left: groove;
+        border-top: groove;
+        border-bottom: groove;
+    }
+     @import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css);
+     input[type="text"]
+     {
+       width: 50px;
+       background-color: #f2dede;
+     }
+    p{
+        font-family: "Allerta Stencil";
+        font-size: 14px;
+        font-style: normal;
+        font-variant: normal;
+        font-weight: 300;
+        line-height: 16px;
+    }
+    h1{
+        font-family: "Allerta Stencil";
+        font-style: normal;
+        font-variant: normal;
+        font-weight: 700;
+        line-height: 16px;
+    }
+
+    </style>
+{% endblock %}
+
+{% block content %}
+
+    <h1 style="font-size: 61px; text-align: center"> Rate Our Menu </h1>
+<br>
+   <div class="row">
+                    <div class="col-md-12">
+                        <nav class="navbar navbar-default" role="navigation">
+                            <div class="navbar-header">
+
+                                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                                     <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+                                </button> <a class="navbar-brand" href="#">Welcome</a>
+                            </div>
+
+                            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                                <ul class="nav navbar-nav">
+                                    <li>
+                                        <a href="{{ url_for('index') }}">HOME</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url_for('relogin')}}">YOUR PAGE</a>
+                                    </li>
+
+
+                                    <li>
+                                        <form class="navbar-form navbar-left" role="search" action= {{url_for('logout')}} >
+                                            <!-- <div class="form-group">
+                                                <input type="text" class="form-control">
+                                             </div> -->
+                                            <button type="submit" class="btn btn-default">
+                                                Sign Out
+                                            </button>
+                                        </form>
+                                    </li>
+                                </ul>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+<br>
+
+    <!-- This form creates the menu and everything between the div is the actual menu  -->
+
+    <!-- This is where it's supposed to iterate through our menu, we display each image of the food, with its price and rating -->
+    
+<div>
+             
+                <div class="col-md-3" >
+                    <div style="border-radius: 25px; margin-top: 5px; border-top: groove; border-left: groove; border-right: groove; border-bottom:groove">
+                        <p style="font-size: 20px; text-align: center"><strong>Bistec (Steak)</strong></p>
+
+                        <img src="/static/img/foodimages/Tacos%20de%20Bistec.jpg " height="200" width="100%" style="user-select: none">
+                        <p></p>
+
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                        <p> Rating: 2.66666666667</p>
+                        <p> Price: rs14 </p>
+
+                        <div>
+                       <form method="post" action="/submit_rating">
+                            <input type="hidden" name="chef_id" value="C2">
+                            <input type="hidden" name="menu_id" value="1">
+                            <p>enter rating <input type="number" name="rating" min="0" max="5"> <input type="submit" value="Submit Rating"> </p>
+                        </form>
+
+                        </div>
+                    </div>
+               </div>
+            
+                <div class="col-md-3" >
+                    <div style="border-radius: 25px; margin-top: 5px; border-top: groove; border-left: groove; border-right: groove; border-bottom:groove">
+                        <p style="font-size: 20px; text-align: center"><strong>Pollo (Chicken)</strong></p>
+
+                        <img src="/static/img/foodimages/Tacos%20de%20Pollo.jpg " height="200" width="100%" style="user-select: none">
+                        <p></p>
+
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                        <p> Rating: 4</p>
+                        <p> Price: rs11 </p>
+
+                        <div>
+                       <form method="post" action="/submit_rating">
+                            <input type="hidden" name="chef_id" value="C2">
+                            <input type="hidden" name="menu_id" value="2">
+                            <p>enter rating <input type="number" name="rating" min="0" max="5"> <input type="submit" value="Submit Rating"> </p>
+                        </form>
+
+                        </div>
+                    </div>
+               </div>
+            
+                <div class="col-md-3" >
+                    <div style="border-radius: 25px; margin-top: 5px; border-top: groove; border-left: groove; border-right: groove; border-bottom:groove">
+                        <p style="font-size: 20px; text-align: center"><strong>Chorizo (Sausage)</strong></p>
+
+                        <img src="/static/img/foodimages/Tacos%20de%20Chorizo.jpg " height="200" width="100%" style="user-select: none">
+                        <p></p>
+
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                        <p> Rating: 5</p>
+                        <p> Price: rs9 </p>
+
+                        <div>
+                       <form method="post" action="/submit_rating">
+                            <input type="hidden" name="chef_id" value="C2">
+                            <input type="hidden" name="menu_id" value="3">
+                            <p>enter rating <input type="number" name="rating" min="0" max="5"> <input type="submit" value="Submit Rating"> </p>
+                        </form>
+
+                        </div>
+                    </div>
+               </div>
+            
+                <div class="col-md-3" >
+                    <div style="border-radius: 25px; margin-top: 5px; border-top: groove; border-left: groove; border-right: groove; border-bottom:groove">
+                        <p style="font-size: 20px; text-align: center"><strong>south indian</strong></p>
+
+                        <img src="/static/img/foodimages/Tacos%20de%20Cecina.jpg " height="200" width="100%" style="user-select: none">
+                        <p></p>
+
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                        <p> Rating: 5</p>
+                        <p> Price: rs13 </p>
+
+                        <div>
+                       <form method="post" action="/submit_rating">
+                            <input type="hidden" name="chef_id" value="C2">
+                            <input type="hidden" name="menu_id" value="4">
+                            <p>enter rating <input type="number" name="rating" min="0" max="5"> <input type="submit" value="Submit Rating"> </p>
+                        </form>
+
+                        </div>
+                    </div>
+               </div>
+            
+                <div class="col-md-3" >
+                    <div style="border-radius: 25px; margin-top: 5px; border-top: groove; border-left: groove; border-right: groove; border-bottom:groove">
+                        <p style="font-size: 20px; text-align: center"><strong>Deep Fried Pork</strong></p>
+
+                        <img src="/static/img/foodimages/Tacos%20de%20Carnitas.jpg " height="200" width="100%" style="user-select: none">
+                        <p></p>
+
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                        <p> Rating: 3</p>
+                        <p> Price: rs9 </p>
+
+                        <div>
+                       <form method="post" action="/submit_rating">
+                            <input type="hidden" name="chef_id" value="C2">
+                            <input type="hidden" name="menu_id" value="5">
+                            <p>enter rating <input type="number" name="rating" min="0" max="5"> <input type="submit" value="Submit Rating"> </p>
+                        </form>
+
+                        </div>
+                    </div>
+               </div>
+            
+                <div class="col-md-3" >
+                    <div style="border-radius: 25px; margin-top: 5px; border-top: groove; border-left: groove; border-right: groove; border-bottom:groove">
+                        <p style="font-size: 20px; text-align: center"><strong>Special one</strong></p>
+
+                        <img src="/static/img/foodimages/Tacos%20de%20Lengua.jpg " height="200" width="100%" style="user-select: none">
+                        <p></p>
+
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                        <p> Rating: 4</p>
+                        <p> Price: rs12 </p>
+
+                        <div>
+                       <form method="post" action="/submit_rating">
+                            <input type="hidden" name="chef_id" value="C2">
+                            <input type="hidden" name="menu_id" value="6">
+                            <p>enter rating <input type="number" name="rating" min="0" max="5"> <input type="submit" value="Submit Rating"> </p>
+                        </form>
+
+                        </div>
+                    </div>
+               </div>
+            
+                <div class="col-md-3" >
+                    <div style="border-radius: 25px; margin-top: 5px; border-top: groove; border-left: groove; border-right: groove; border-bottom:groove">
+                        <p style="font-size: 20px; text-align: center"><strong>Fresh White Cheese</strong></p>
+
+                        <img src="/static/img/foodimages/Torta%20de%20Queso%20Blanco.jpg " height="200" width="100%" style="user-select: none">
+                        <p></p>
+
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                        <p> Rating: 3</p>
+                        <p> Price: rs5 </p>
+
+                        <div>
+                       <form method="post" action="/submit_rating">
+                            <input type="hidden" name="chef_id" value="C2">
+                            <input type="hidden" name="menu_id" value="7">
+                            <p>enter rating <input type="number" name="rating" min="0" max="5"> <input type="submit" value="Submit Rating"> </p>
+                        </form>
+
+                        </div>
+                    </div>
+               </div>
+            
+                <div class="col-md-3" >
+                    <div style="border-radius: 25px; margin-top: 5px; border-top: groove; border-left: groove; border-right: groove; border-bottom:groove">
+                        <p style="font-size: 20px; text-align: center"><strong>Breaded Steak</strong></p>
+
+                        <img src="/static/img/foodimages/Torta%20de%20Milanesa.jpg " height="200" width="100%" style="user-select: none">
+                        <p></p>
+
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                        <p> Rating: 4</p>
+                        <p> Price: rs15 </p>
+
+                        <div>
+                       <form method="post" action="/submit_rating">
+                            <input type="hidden" name="chef_id" value="C2">
+                            <input type="hidden" name="menu_id" value="8">
+                            <p>enter rating <input type="number" name="rating" min="0" max="5"> <input type="submit" value="Submit Rating"> </p>
+                        </form>
+
+                        </div>
+                    </div>
+               </div>
+            
+                <div class="col-md-3" >
+                    <div style="border-radius: 25px; margin-top: 5px; border-top: groove; border-left: groove; border-right: groove; border-bottom:groove">
+                        <p style="font-size: 20px; text-align: center"><strong>Jamon (Ham)</strong></p>
+
+                        <img src="/static/img/foodimages/Torta%20de%20Jamon.jpg " height="200" width="100%" style="user-select: none">
+                        <p></p>
+
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                        <p> Rating: 4</p>
+                        <p> Price: rs11 </p>
+
+                        <div>
+                       <form method="post" action="/submit_rating">
+                            <input type="hidden" name="chef_id" value="C2">
+                            <input type="hidden" name="menu_id" value="9">
+                            <p>enter rating <input type="number" name="rating" min="0" max="5"> <input type="submit" value="Submit Rating"> </p>
+                        </form>
+
+                        </div>
+                    </div>
+               </div>
+            
+                <div class="col-md-3" >
+                    <div style="border-radius: 25px; margin-top: 5px; border-top: groove; border-left: groove; border-right: groove; border-bottom:groove">
+                        <p style="font-size: 20px; text-align: center"><strong>Hot and Spicy Pork</strong></p>
+
+                        <img src="/static/img/foodimages/Torta%20de%20Carne%20Enchilada.jpg " height="200" width="100%" style="user-select: none">
+                        <p></p>
+
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                        <p> Rating: 4</p>
+                        <p> Price: rs14 </p>
+
+                        <div>
+                       <form method="post" action="/submit_rating">
+                            <input type="hidden" name="chef_id" value="C2">
+                            <input type="hidden" name="menu_id" value="10">
+                            <p>enter rating <input type="number" name="rating" min="0" max="5"> <input type="submit" value="Submit Rating"> </p>
+                        </form>
+
+                        </div>
+                    </div>
+               </div>
+            
+                <div class="col-md-3" >
+                    <div style="border-radius: 25px; margin-top: 5px; border-top: groove; border-left: groove; border-right: groove; border-bottom:groove">
+                        <p style="font-size: 20px; text-align: center"><strong>Lobster Ceviche</strong></p>
+
+                        <img src="/static/img/foodimages/Lobster%20Ceviche.jpg " height="200" width="100%" style="user-select: none">
+                        <p></p>
+
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                        <p> Rating: 2</p>
+                        <p> Price: rs24 </p>
+
+                        <div>
+                       <form method="post" action="/submit_rating">
+                            <input type="hidden" name="chef_id" value="C3">
+                            <input type="hidden" name="menu_id" value="1">
+                            <p>enter rating <input type="number" name="rating" min="0" max="5"> <input type="submit" value="Submit Rating"> </p>
+                        </form>
+
+                        </div>
+                    </div>
+               </div>
+            
+    
+             {% for item in menu_items %}
+                <div class="col-md-3" >
+                    <div style="border-radius: 25px; margin-top: 5px; border-top: groove; border-left: groove; border-right: groove; border-bottom:groove">
+                        <p style="font-size: 20px; text-align: center"><strong>{{ item[3] }}</strong></p>
+
+                        <img src="{{ url_for('static', filename='img/foodimages/{}'.format(item[1])) }} " height="200" width="100%" style="user-select: none">
+                        <p>{{ item.itemDesc }}</p>
+
+                            {% for number in range(0, item[5]| int) %}
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            {% endfor %}
+                        <p> Rating: {{ item[5]}}</p>
+                        <p> Price: rs{{ item[4] }} </p>
+
+                        <div>
+                       <form method="post" action="{{ url_for('submit_rating') }}">
+                            <input type="hidden" name="chef_id" value="{{item[0]}}">
+                            <input type="hidden" name="menu_id" value="{{item[2]}}">
+                            <p>enter rating <input type="number" name="rating" min="0" max="5"> <input type="submit" value="Submit Rating"> </p>
+                        </form>
+
+                        </div>
+                    </div>
+               </div>
+            {% endfor %}
+
+    </div>
+
+
+{% endblock %}

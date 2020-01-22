@@ -1,0 +1,533 @@
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}
+Menu
+{% endblock %}
+
+{% block styles %}
+{{super()}}
+<link rel="stylesheet" href="{{url_for('.static', filename='signup.css')}}">
+
+    <!-- Font link  -->
+<link href="https://fonts.googleapis.com/css?family=Allerta+Stencil" rel="stylesheet">
+
+    <!-- Styling code -->
+    <style>
+    {#  Using FontAwesome for heart icons #}
+    body
+    {
+        background-color: mistyrose;
+    }
+    .menu_item
+    {
+        border-right: groove;
+        border-left: groove;
+        border-top: groove;
+        border-bottom: groove;
+    }
+     @import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css);
+     input[type="text"]
+     {
+       width: 50px;
+       background-color: #f2dede;
+     }
+    p{
+        font-family: "Allerta Stencil";
+        font-size: 14px;
+        font-style: normal;
+        font-variant: normal;
+        font-weight: 300;
+        line-height: 16px;
+    }
+    h1{
+        font-family: "Allerta Stencil";
+        font-style: normal;
+        font-variant: normal;
+        font-weight: 700;
+        line-height: 16px;
+    }
+
+    </style>
+{% endblock %}
+
+{% block content %}
+
+
+    <!-- if the items == 0 and the sum of total for items in the shopping cart is 0 -->
+    {% if sum_of_items == 0 %}
+        <h1> Cart is Empty </h1>
+
+    <!-- then display that the cart is empty -->
+    {% else %}
+
+        <h1 style="margin-bottom: 25px"> <i class="fa fa-shopping-cart" aria-hidden="true">Shopping Cart</i> </h1>
+    <div class="container-fluid">
+
+        <form method="post" action="/menu">
+
+            <div class="row">
+
+                  <div class="col-md-4">
+                    <!-- databaseitems is a dictionary in python, in -->
+                    {% for item in cart %}
+                        <p>{{ item[3] }}</p>            <p>quantity: {{ item[4] }}</p>
+
+                   {% endfor %}
+                  </div>
+
+
+                    <!--<div class="col-md-4">-->
+                        <!--{% for items in cart %}-->
+                          <!--{#  {% if sum_of_items == 0 %} #}-->
+                                <!--{#DON'T RENDER THIS FOOD BECAUSE SUBTOTAL FOR IT IS ZERO  #}-->
+                           <!--{#  {% else %} #}-->
+                                <!--<p>Total Price for this Item: ${# {{ total[loop.index] }} #} </p>-->
+                           <!--{# {% endif %} #}-->
+                        <!--{% endfor %}-->
+                    <!--</div>-->
+            </div>
+                <h1> Total Price</h1>
+                <h2>rs{{ sum_of_items }}</h2>
+            <button type="button" ><a href="{{ url_for('empty_cart') }}">Empty Cart </a></button>
+            <button type="button" ><a href="{{ url_for('checkout', price=sum_of_items, order_items=cart ) }}">Checkout </a></button>        </form>
+    </div>
+    {% endif %}
+<br>
+    <h1 style="font-size: 61px; text-align: center"; margin-bottom="15px"> Menu </h1>
+    <br>
+    <div class="row">
+                    <div class="col-md-12">
+                        <nav class="navbar navbar-default" role="navigation">
+                            <div class="navbar-header">
+
+                                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                                     <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+                                </button> <a class="navbar-brand" href="#">WelCome</a>
+                            </div>
+
+                            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                                <ul class="nav navbar-nav">
+                                    <li>
+                                        <a href="{{ url_for('index') }}">HOME</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url_for('relogin')}}">YOUR PAGE</a>
+                                    </li>
+
+
+                                    <li>
+                                        <form class="navbar-form navbar-left" role="search" action= {{url_for('logout')}} >
+                                            <!-- <div class="form-group">
+                                                <input type="text" class="form-control">
+                                             </div> -->
+                                            <button type="submit" class="btn btn-default">
+                                                Sign Out
+                                            </button>
+                                        </form>
+                                    </li>
+                                </ul>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+<br>
+
+    <!-- This form creates the menu and everything between the div is the actual menu  -->
+    <form method="post" action="{{ url_for('add_to_cart') }}">
+
+    <!-- This is where it's supposed to iterate through our menu, we display each image of the food, with its price and rating -->
+    
+             {% for item in menu_items %}
+                 <div>
+             
+                <div class="col-md-3" >
+                    <div style="border-radius: 25px; margin-top: 5px; border-top: groove; border-left: groove; border-right: groove; border-bottom:groove">
+                        <p style="font-size: 20px; text-align: center"><strong>Bistec</strong></p>
+
+                        <img src="/static/img/foodimages/Tacos%20de%20Bistec.jpg " height="200" width="100%" style="user-select: none">
+                        <p> Bistec steak,Perfect for anytime of the day</p>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                        <p> Rating: 2.66666</p>
+                        <p> Price: rs14 </p>
+                        <input type="hidden" name="user_id" value="whitedevil" >
+                        <p> enter quantity <input type="number" name="quantity" min="0"> </p>
+                    </div>
+               </div>
+            
+                <div class="col-md-3" >
+                    <div style="border-radius: 25px; margin-top: 5px; border-top: groove; border-left: groove; border-right: groove; border-bottom:groove">
+                        <p style="font-size: 20px; text-align: center"><strong>Chicken Role</strong></p>
+
+                        <img src="/static/img/foodimages/Tacos%20de%20Pollo.jpg " height="200" width="100%" style="user-select: none">
+                        <p>Chicken Role,Perfect for anytime of the day</p>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                        <p> Rating: 4.5</p>
+                        <p> Price: rs11 </p>
+                        <input type="hidden" name="user_id" value="whitedevil" >
+                        <p> enter quantity <input type="number" name="quantity" min="0"> </p>
+                    </div>
+               </div>
+            
+                <div class="col-md-3" >
+                    <div style="border-radius: 25px; margin-top: 5px; border-top: groove; border-left: groove; border-right: groove; border-bottom:groove">
+                        <p style="font-size: 20px; text-align: center"><strong>Chorizo (Sausage)</strong></p>
+
+                        <img src="/static/img/foodimages/Tacos%20de%20Chorizo.jpg " height="200" width="100%" style="user-select: none">
+                        <p>Chorizo Sausage Perfect for vegeterian</p>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                        <p> Rating: 5</p>
+                        <p> Price: rs9 </p>
+                        <input type="hidden" name="user_id" value="whitedevil" >
+                        <p> enter quantity <input type="number" name="quantity" min="0"> </p>
+                    </div>
+               </div>
+            
+                <div class="col-md-3" >
+                    <div style="border-radius: 25px; margin-top: 5px; border-top: groove; border-left: groove; border-right: groove; border-bottom:groove">
+                        <p style="font-size: 20px; text-align: center"><strong>South indian</strong></p>
+
+                        <img src="/static/img/foodimages/Tacos%20de%20Cecina.jpg " height="200" width="100%" style="user-select: none">
+                        <p>South indian dish for south people,Perfect anytime of the day</p>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                        <p> Rating: 3</p>
+                        <p> Price: rs9 </p>
+                        <input type="hidden" name="user_id" value="whitedevil" >
+                        <p> enter quantity <input type="number" name="quantity" min="0"> </p>
+                    </div>
+               </div>
+            
+                <div class="col-md-3" >
+                    <div style="border-radius: 25px; margin-top: 5px; border-top: groove; border-left: groove; border-right: groove; border-bottom:groove">
+                        <p style="font-size: 20px; text-align: center"><strong>Deep Fried vegetable</strong></p>
+
+                        <img src="/static/img/foodimages/Tacos%20de%20Carnitas.jpg " height="200" width="100%" style="user-select: none">
+                        <p>Deep Fried vegetable! Perfect for anytime of the day</p>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                        <p> Rating: 3</p>
+                        <p> Price: rs12 </p>
+                        <input type="hidden" name="user_id" value="whitedevil" >
+                        <p> enter quantity <input type="number" name="quantity" min="0"> </p>
+                    </div>
+               </div>
+            
+                <div class="col-md-3" >
+                    <div style="border-radius: 25px; margin-top: 5px; border-top: groove; border-left: groove; border-right: groove; border-bottom:groove">
+                        <p style="font-size: 20px; text-align: center"><strong>Breads with green veg</strong></p>
+
+                        <img src="/static/img/foodimages/Tacos%20de%20Lengua.jpg " height="200" width="100%" style="user-select: none">
+                        <p>Breads with green vegetable! Perfect for anytime of the day</p>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                        <p> Rating: 4</p>
+                        <p> Price: rs15 </p>
+                        <input type="hidden" name="user_id" value="whitedevil" >
+                        <p> enter quantity <input type="number" name="quantity" min="0"> </p>
+                    </div>
+               </div>
+            
+                <div class="col-md-3" >
+                    <div style="border-radius: 25px; margin-top: 5px; border-top: groove; border-left: groove; border-right: groove; border-bottom:groove">
+                        <p style="font-size: 20px; text-align: center"><strong>Fresh White Cheese</strong></p>
+
+                        <img src="/static/img/foodimages/Torta%20de%20Queso%20Blanco.jpg " height="200" width="100%" style="user-select: none">
+                        <p> Fresh White Cheese is also Perfect for anytime of the day</p>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                        <p> Rating: 3</p>
+                        <p> Price: rs11 </p>
+                        <input type="hidden" name="user_id" value="whitedevil" >
+                        <p> enter quantity <input type="number" name="quantity" min="0"> </p>
+                    </div>
+               </div>
+            
+                <div class="col-md-3" >
+                    <div style="border-radius: 25px; margin-top: 5px; border-top: groove; border-left: groove; border-right: groove; border-bottom:groove">
+                        <p style="font-size: 20px; text-align: center"><strong>Burger</strong></p>
+
+                        <img src="/static/img/foodimages/Torta%20de%20Milanesa.jpg " height="200" width="100%" style="user-select: none">
+                        <p>Burger!Pefect for fastFood</p>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                        <p> Rating: 4</p>
+                        <p> Price: rs14 </p>
+                        <input type="hidden" name="user_id" value="whitedevil" >
+                        <p> enter quantity <input type="number" name="quantity" min="0"> </p>
+                    </div>
+               </div>
+            
+                <div class="col-md-3" >
+                    <div style="border-radius: 25px; margin-top: 5px; border-top: groove; border-left: groove; border-right: groove; border-bottom:groove">
+                        <p style="font-size: 20px; text-align: center"><strong>Burger Masala</strong></p>
+
+                        <img src="/static/img/foodimages/Torta%20de%20Jamon.jpg " height="200" width="100%" style="user-select: none">
+                        <p>Burger Masala!Perfect for Fast Food</p>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                        <p> Rating: 4</p>
+                        <p> Price: rs24 </p>
+                        <input type="hidden" name="user_id" value="whitedevil" >
+                        <p> enter quantity <input type="number" name="quantity" min="0"> </p>
+                    </div>
+               </div>
+            
+                <div class="col-md-3" >
+                    <div style="border-radius: 25px; margin-top: 5px; border-top: groove; border-left: groove; border-right: groove; border-bottom:groove">
+                        <p style="font-size: 20px; text-align: center"><strong>Hot and Spicy Pork</strong></p>
+
+                        <img src="/static/img/foodimages/Torta%20de%20Carne%20Enchilada.jpg " height="200" width="100%" style="user-select: none">
+                        <p> Perfect for anytime of the day</p>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                        <p> Rating: 4</p>
+                        <p> Price: rs24 </p>
+                        <input type="hidden" name="user_id" value="whitedevil" >
+                        <p> enter quantity <input type="number" name="quantity" min="0"> </p>
+                    </div>
+               </div>
+            
+                <div class="col-md-3" >
+                    <div style="border-radius: 25px; margin-top: 5px; border-top: groove; border-left: groove; border-right: groove; border-bottom:groove">
+                        <p style="font-size: 20px; text-align: center"><strong>Lobster Ceviche</strong></p>
+
+                        <img src="/static/img/foodimages/Lobster%20Ceviche.jpg " height="200" width="100%" style="user-select: none">
+                        <p>Tacos de Bistec are simply steak tacos! Perfect for anytime of the day</p>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                        <p> Rating: 2</p>
+                        <p> Price: rs24 </p>
+                        <input type="hidden" name="user_id" value="whitedevil" >
+                        <p> enter quantity <input type="number" name="quantity" min="0"> </p>
+                    </div>
+               </div>
+            
+                <div class="col-md-3" >
+                    <div style="border-radius: 25px; margin-top: 5px; border-top: groove; border-left: groove; border-right: groove; border-bottom:groove">
+                        <p style="font-size: 20px; text-align: center"><strong>Yellowtail Sashimi with Dry Miso and Yuza Sauce</strong></p>
+
+                        <img src="/static/img/foodimages/Yelllow%20Tail%20Sashimi.jpg " height="200" width="100%" style="user-select: none">
+                        <p>Tacos de Bistec are simply steak tacos! Perfect for anytime of the day</p>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                        <p> Rating: 2</p>
+                        <p> Price: rs24 </p>
+                        <input type="hidden" name="user_id" value="whitedevil" >
+                        <p> enter quantity <input type="number" name="quantity" min="0"> </p>
+                    </div>
+               </div>
+            
+                <div class="col-md-3" >
+                    <div style="border-radius: 25px; margin-top: 5px; border-top: groove; border-left: groove; border-right: groove; border-bottom:groove">
+                        <p style="font-size: 20px; text-align: center"><strong>Shiromi Usuzukari</strong></p>
+
+                        <img src="/static/img/foodimages/Shiromi%20Usuzukari.jpg " height="200" width="100%" style="user-select: none">
+                        <p>Tacos de Bistec are simply steak tacos! Perfect for anytime of the day</p>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                        <p> Rating: 4</p>
+                        <p> Price: rs9 </p>
+                        <input type="hidden" name="user_id" value="whitedevil" >
+                        <p> enter quantity <input type="number" name="quantity" min="0"> </p>
+                    </div>
+               </div>
+            
+                <div class="col-md-3" >
+                    <div style="border-radius: 25px; margin-top: 5px; border-top: groove; border-left: groove; border-right: groove; border-bottom:groove">
+                        <p style="font-size: 20px; text-align: center"><strong>Bigeye Tuna Tataki with Tosazu</strong></p>
+
+                        <img src="/static/img/foodimages/Bigeye%20Tuna%20Tataki.jpg " height="200" width="100%" style="user-select: none">
+                        <p>Tacos de Bistec are simply steak tacos! Perfect for anytime of the day</p>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                        <p> Rating: 4</p>
+                        <p> Price: rs19 </p>
+                        <input type="hidden" name="user_id" value="whitedevil" >
+                        <p> enter quantity <input type="number" name="quantity" min="0"> </p>
+                    </div>
+               </div>
+            
+                <div class="col-md-3" >
+                    <div style="border-radius: 25px; margin-top: 5px; border-top: groove; border-left: groove; border-right: groove; border-bottom:groove">
+                        <p style="font-size: 20px; text-align: center"><strong>sea Urchin Tempura</strong></p>
+
+                        <img src="/static/img/foodimages/Sea%20Urchin%20Tempura.jpg " height="200" width="100%" style="user-select: none">
+                        <p>Tacos de Bistec are simply steak tacos! Perfect for anytime of the day</p>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                        <p> Rating: 4</p>
+                        <p> Price: rs90 </p>
+                        <input type="hidden" name="user_id" value="whitedevil" >
+                        <p> enter quantity <input type="number" name="quantity" min="0"> </p>
+                    </div>
+               </div>
+            
+                <div class="col-md-3" >
+                    <div style="border-radius: 25px; margin-top: 5px; border-top: groove; border-left: groove; border-right: groove; border-bottom:groove">
+                        <p style="font-size: 20px; text-align: center"><strong>Rock Shrimp Tempura with Ponzu</strong></p>
+
+                        <img src="/static/img/foodimages/Rock%20Shrimp%20Tempura.jpg " height="200" width="100%" style="user-select: none">
+                        <p>Tacos de Bistec are simply steak tacos! Perfect for anytime of the day</p>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                        <p> Rating: 5</p>
+                        <p> Price: rs11 </p>
+                        <input type="hidden" name="user_id" value="whitedevil" >
+                        <p> enter quantity <input type="number" name="quantity" min="0"> </p>
+                    </div>
+               </div>
+            
+                <div class="col-md-3" >
+                    <div style="border-radius: 25px; margin-top: 5px; border-top: groove; border-left: groove; border-right: groove; border-bottom:groove">
+                        <p style="font-size: 20px; text-align: center"><strong>Chilean Sea Bass with Black Sause</strong></p>
+
+                        <img src="/static/img/foodimages/Chilean%20Sea%20Bass.jpg " height="200" width="100%" style="user-select: none">
+                        <p>Tacos de Bistec are simply steak tacos! Perfect for anytime of the day</p>
+                            
+                        <p> Rating: </p>
+                        <p> Price: rs24 </p>
+                        <input type="hidden" name="user_id" value="whitedevil" >
+                        <p> enter quantity <input type="number" name="quantity" min="0"> </p>
+                    </div>
+               </div>
+            
+                <div class="col-md-3" >
+                    <div style="border-radius: 25px; margin-top: 5px; border-top: groove; border-left: groove; border-right: groove; border-bottom:groove">
+                        <p style="font-size: 20px; text-align: center"><strong>Chicken</strong></p>
+
+                        <img src="/static/img/foodimages/Mole%20Poblano.jpg " height="200" width="100%" style="user-select: none">
+                        <p>Tacos de Bistec are simply steak tacos! Perfect for anytime of the day</p>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            
+                        <p> Rating: 5</p>
+                        <p> Price: rs15 </p>
+                        <input type="hidden" name="user_id" value="whitedevil" >
+                        <p> enter quantity <input type="number" name="quantity" min="0"> </p>
+                    </div>
+               </div>
+   
+            {% endfor %}
+
+    
+        <input type="submit" value="Add To Cart" style="width: 100%; height: 45px; background-color: #f2dede; border-color: black">
+    </form>
+
+    <br>
+
+{% endblock %}
+
